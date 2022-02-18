@@ -1,0 +1,47 @@
+﻿@page "{pageIndex:int?}"
+@using Blogio.Data;
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    var userId = UserManager.GetUserId(User);
+    var user = await UserManager.FindByIdAsync(userId);
+}
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<div class="">
+    <div class="row">
+        <div class="col-md-9">
+            @foreach (var mypage in Model.BlogPosts)
+            {
+                <div class="border-bottom" style="padding: 1rem; margin: 1px">
+                    <h2 class="card-title">
+                        @mypage.Title
+                        @if (SignInManager.IsSignedIn(User) && (await UserManager.IsInRoleAsync(user, "Admin")))
+                        {
+                            <a asp-page="./Posts/Edit" class="btn btn-danger" asp-route-postId="@mypage.Id">Edit</a>
+                        }
+                    </h2>
+                    <p>@mypage.Time</p>
+                    <div class="card-text">@mypage.Article</div>
+                    <a asp-page="./Posts/ReadPost" asp-route-postId="@mypage.Id" class="btn btn-outline-primary" style="margin-left:90%">Read More</a>
+                </div>
+            }
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="page-item @Pages.HasPrevious(Model.PageIndex)"><a class="page-link" asp-page="./Index/" asp-route-pageIndex="@(Model.PageIndex - 1)">Previous</a></li>
+                    <li class="page-item @Pages.HasNext(Model.PageIndex, Model.PagesCount)"><a class="page-link" asp-page="./Index/" asp-route-pageIndex="@(Model.PageIndex + 1)">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-md-3 border-left" style="min-height: 80vh">
+            <partial name="./Shared/_AboutMe.cshtml" />
+        </div>
+    </div>
+</div>
+

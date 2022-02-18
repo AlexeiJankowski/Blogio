@@ -1,0 +1,25 @@
+﻿@page "{postId}"
+@model Blogio.Pages.Posts.EditModel
+@{
+}
+
+<form method="post">
+    <input type="hidden" asp-for="BlogPost.Id" />
+    <div class="form-group">
+        <label asp-for="BlogPost.Title"></label>
+        <input asp-for="BlogPost.Title" class="from-control" />
+        <span class="text-danger" asp-validation-for="BlogPost.Title"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BlogPost.Time"></label>
+        <input asp-for="BlogPost.Time" class="form-control" />
+        <span class="text-danger" asp-validation-for="BlogPost.Time"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="BlogPost.Article"></label>
+        <textarea rows="15" asp-for="BlogPost.Article" class="form-control"></textarea>
+        <span class="text-danger" asp-validation-for="BlogPost.Article"></span>
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+    <a asp-page="../Index" class="btn border-primary">Back to the Main Page</a>
+</form>

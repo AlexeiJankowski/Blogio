@@ -1,0 +1,20 @@
+﻿@page "{postId:int}"
+@model Blogio.Pages.Posts.ReadPostModel
+@{
+    ViewData["Title"] = Model.BlogPost.Title;
+}
+
+
+<div class="row">
+    <div class="col-md-9">
+        <div>
+            <h2>@Model.BlogPost.Title</h2>
+            <p>@Model.BlogPost.Time</p>
+            <div class="">@Model.BlogPost.Article</div>
+        </div>  
+        <a asp-page="../Index" class="btn btn-outline-primary" style="margin-top:15px">Back to the Main Page</a>
+    </div>
+    <div class="col-md-3 border-left" style="min-height: 80vh">
+        <partial name="../Shared/_AboutMe.cshtml" />
+    </div>
+</div>
